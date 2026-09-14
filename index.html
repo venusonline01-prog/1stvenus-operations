@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <meta name="theme-color" content="#0866d9">
+  <title>Papan Operasional — 1st Venus Computer</title>
+  <style>
+    :root{--blue:#0866d9;--blue2:#0755b7;--soft:#eef5ff;--bg:#f5f8fd;--ink:#10233f;--dim:#65748a;--line:#dce8f7;--red:#dc2626;--green:#087b50;--amber:#b45309}
+    *{box-sizing:border-box}html,body{margin:0}body{min-height:100vh;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+    button,input,textarea,select{font:inherit}.app{max-width:1080px;margin:auto;padding:0 16px 90px}
+    header{background:#fff;border-bottom:1px solid var(--line);margin:0 -16px 24px;padding:15px 16px}.head{max-width:1080px;margin:auto;display:flex;align-items:center;gap:12px}
+    .mark{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:var(--blue);color:#fff;font-weight:900;box-shadow:0 8px 22px #0866d930}
+    h1,h2,h3,p{margin:0}h1{font-size:18px;line-height:1.2}.sub{font-size:13px;color:var(--dim)}
+    .banner{display:flex;align-items:flex-start;gap:10px;margin-bottom:16px;padding:12px 14px;border:1px solid #f2d18c;border-radius:14px;background:#fff8e8;color:#87520c;font-size:13px}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}.stat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:17px}.stat.primary{background:var(--blue);color:#fff}.stat small{display:block;color:var(--dim)}.stat.primary small{color:#dbeafe}.stat b{display:block;margin-top:3px;font-size:28px}
+    .board{background:#fff;border:1px solid var(--line);border-radius:24px;padding:20px;box-shadow:0 18px 55px #1b498014}.toolbar{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:18px}.toolbar h2{font-size:20px}.toolbar p{font-size:13px;color:var(--dim)}
+    .add{border:0;border-radius:12px;background:var(--blue);color:#fff;padding:11px 15px;font-weight:750;cursor:pointer;white-space:nowrap}.add:hover{background:var(--blue2)}
+    .pills{display:flex;gap:7px;overflow:auto;padding-bottom:12px;scrollbar-width:none}.pill{flex:none;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--dim);padding:7px 12px;cursor:pointer}.pill.active{border-color:var(--blue);background:var(--soft);color:var(--blue);font-weight:700}
+    .tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;background:var(--soft);padding:5px;border-radius:13px;margin-bottom:14px}.tab{border:0;border-radius:10px;background:transparent;color:var(--dim);padding:9px 6px;cursor:pointer;font-size:13px}.tab.active{background:#fff;color:var(--blue);font-weight:750;box-shadow:0 2px 8px #193c6814}.tab b{margin-left:5px}
+    .list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.empty{grid-column:1/-1;text-align:center;padding:55px 20px;border:1px dashed #bcd3ef;border-radius:17px;background:#f9fbff;color:var(--dim)}.empty b{display:block;color:var(--ink);font-size:16px;margin-bottom:3px}
+    .card{border:1px solid var(--line);border-radius:17px;padding:15px;background:#fff}.card.overdue{border-color:#fecaca;background:#fffafa}.row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}.tag{border-radius:999px;background:var(--soft);color:var(--blue);padding:3px 8px;font-size:11px;font-weight:700}.tag.high{background:#fff2d8;color:var(--amber)}.tag.urgent{background:#fee2e2;color:var(--red)}.card h3{font-size:16px}.desc{color:var(--dim);font-size:13px;margin-top:7px}.meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:13px;color:#536176;font-size:12.5px}.route{color:var(--blue);font-weight:700}.late{color:var(--red);font-weight:700}
+    .actions{display:flex;justify-content:flex-end;gap:6px;margin-top:13px;padding-top:11px;border-top:1px solid #eef3fa}.btn{border:0;border-radius:9px;padding:7px 10px;cursor:pointer;font-size:12px;font-weight:700}.edit{background:var(--soft);color:var(--blue)}.done{background:#e7f7ef;color:var(--green)}.delete{background:#fff0f0;color:var(--red)}
+    .overlay{display:none;position:fixed;inset:0;z-index:20;background:#0d1c325c;align-items:flex-end;justify-content:center}.overlay.open{display:flex}.sheet{width:100%;max-width:680px;max-height:92vh;overflow:auto;border-radius:22px 22px 0 0;background:#fff;padding:21px}.sheet h2{font-size:20px}.hint{font-size:13px;color:var(--dim);margin-bottom:16px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:grid;gap:5px;margin-bottom:13px}.field.full{grid-column:1/-1}.field label{font-size:12.5px;font-weight:750}.field input,.field textarea,.field select{width:100%;border:1px solid #cfdced;border-radius:10px;background:#fff;padding:10px;color:var(--ink);outline:none}.field textarea{min-height:75px;resize:vertical}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--blue);box-shadow:0 0 0 3px #0866d91c}
+    .sheet-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:5px}.cancel{border:1px solid var(--line);background:#fff;color:var(--dim)}.save{border:0;background:var(--blue);color:#fff}.toast{position:fixed;left:50%;bottom:28px;z-index:40;transform:translate(-50%,20px);opacity:0;transition:.2s;background:#123254;color:#fff;border-radius:999px;padding:9px 15px;font-size:13px;font-weight:700}.toast.show{opacity:1;transform:translate(-50%,0)}
+    @media(max-width:720px){.stats{grid-template-columns:1fr 1fr}.stat.primary{grid-column:1/-1}.board{padding:15px;border-radius:20px}.list{grid-template-columns:1fr}.tabs{display:flex;overflow:auto}.tab{flex:none;padding:9px 12px}.toolbar{align-items:flex-start}.grid{grid-template-columns:1fr}.field.full{grid-column:auto}.meta{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <header><div class="head"><div class="mark">1V</div><div><h1>Papan Operasional</h1><p class="sub">1st Venus Computer</p></div></div></header>
+  <div class="banner" id="modeBanner"><span>⚠</span><span><b>Mode perangkat sementara.</b> Data belum tersinkron ke perangkat tim lain sampai Firebase 1st Venus disambungkan.</span></div>
+  <section class="stats">
+    <div class="stat primary"><small>Tugas aktif</small><b id="activeCount">0</b></div>
+    <div class="stat"><small>Selesai</small><b id="doneCount">0</b></div>
+    <div class="stat"><small>Lewat deadline</small><b id="lateCount">0</b></div>
+  </section>
+  <section class="board">
+    <div class="toolbar"><div><h2>Daftar pekerjaan tim</h2><p>Pantau pekerjaan dan teruskan ke divisi berikutnya.</p></div><button class="add" id="addBtn">＋ Tambah tugas</button></div>
+    <div class="pills" id="deptPills"></div>
+    <div class="tabs" id="statusTabs"></div>
+    <div class="list" id="taskList"></div>
+  </section>
+</div>
+<div class="overlay" id="overlay"><form class="sheet" id="taskForm">
+  <h2 id="formTitle">Tugas baru</h2><p class="hint">Isi informasi inti agar pekerjaan mudah dipahami tim.</p>
+  <div class="grid">
+    <div class="field full"><label>Judul tugas</label><input id="title" maxlength="160" required placeholder="Contoh: Siapkan pesanan printer marketplace"></div>
+    <div class="field full"><label>Detail / catatan</label><textarea id="description" maxlength="2000" placeholder="Nomor pesanan atau langkah berikutnya"></textarea></div>
+    <div class="field"><label>Divisi</label><select id="department"></select></div>
+    <div class="field"><label>Nama PIC</label><input id="pic" maxlength="100" placeholder="Penanggung jawab"></div>
+    <div class="field"><label>Status</label><select id="status"></select></div>
+    <div class="field"><label>Prioritas</label><select id="priority"><option>Rendah</option><option selected>Normal</option><option>Tinggi</option><option>Mendesak</option></select></div>
+    <div class="field"><label>Deadline</label><input id="dueDate" type="date"></div>
+    <div class="field" id="targetField" hidden><label>Dialihkan ke</label><select id="targetDept"></select></div>
+  </div>
+  <div class="sheet-actions"><button class="btn cancel" type="button" id="cancelBtn">Batal</button><button class="btn save" type="submit">Simpan tugas</button></div>
+</form></div>
+<div class="toast" id="toast">Tersimpan</div>
+<script>
+// Isi setelah Firebase Realtime Database khusus 1st Venus dibuat.
+const FIREBASE_BASE = "";
+const DATA_URL = FIREBASE_BASE ? FIREBASE_BASE.replace(/\/$/,"") + "/tasks.json" : "";
+const DEPTS=["Owner / Manager","Sales Toko","Admin Marketplace","Gudang","Purchasing","Keuangan","Teknisi / Servis","Marketing & Konten"];
+const STATUSES=[["new","Baru"],["in_progress","Dikerjakan"],["waiting","Menunggu"],["handoff","Dialihkan"],["done","Selesai"]];
+let tasks=[],deptFilter="Semua Divisi",statusFilter="in_progress",editingId=null,events=null;
+const $=s=>document.querySelector(s),esc=s=>{const d=document.createElement("div");d.textContent=s??"";return d.innerHTML};
+const today=()=>new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Makassar"}).format(new Date());
+const late=t=>t.dueDate&&t.status!=="done"&&t.dueDate<today();
+function showToast(text){$("#toast").textContent=text;$("#toast").classList.add("show");setTimeout(()=>$("#toast").classList.remove("show"),1400)}
+function normalize(data){return data?Object.entries(data).map(([id,t])=>({id,...t})):[]}
+async function load(){
+  if(!DATA_URL){tasks=JSON.parse(localStorage.getItem("venusTasks")||"[]");render();return}
+  try{const r=await fetch(DATA_URL);if(!r.ok)throw Error();tasks=normalize(await r.json());$("#modeBanner").style.display="none";render();connect()}
+  catch{$("#modeBanner").innerHTML="<span>⚠</span><span><b>Database belum dapat dihubungi.</b> Periksa koneksi lalu muat ulang halaman.</span>";render()}
+}
+function connect(){if(events||!DATA_URL)return;events=new EventSource(DATA_URL);events.addEventListener("put",e=>{const p=JSON.parse(e.data);if(p.path==="/"){tasks=normalize(p.data);render()}})}
+async function save(t){
+  if(DATA_URL){const r=await fetch(DATA_URL.replace("tasks.json","tasks/"+t.id+".json"),{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({...t,id:undefined})});if(!r.ok)throw Error()}
+  else{const i=tasks.findIndex(x=>x.id===t.id);if(i<0)tasks.push(t);else tasks[i]=t;localStorage.setItem("venusTasks",JSON.stringify(tasks))}
+}
+async function remove(id){
+  if(DATA_URL){const r=await fetch(DATA_URL.replace("tasks.json","tasks/"+id+".json"),{method:"DELETE"});if(!r.ok)throw Error()}
+  else{tasks=tasks.filter(t=>t.id!==id);localStorage.setItem("venusTasks",JSON.stringify(tasks))}
+}
+function render(){
+  $("#activeCount").textContent=tasks.filter(t=>t.status!=="done").length;$("#doneCount").textContent=tasks.filter(t=>t.status==="done").length;$("#lateCount").textContent=tasks.filter(late).length;
+  $("#deptPills").innerHTML=["Semua Divisi",...DEPTS].map(d=>`<button class="pill ${d===deptFilter?"active":""}" data-dept="${d}">${d}</button>`).join("");
+  document.querySelectorAll("[data-dept]").forEach(b=>b.onclick=()=>{deptFilter=b.dataset.dept;render()});
+  const relevant=t=>deptFilter==="Semua Divisi"||t.department===deptFilter||t.targetDept===deptFilter;
+  $("#statusTabs").innerHTML=STATUSES.map(([s,l])=>`<button class="tab ${s===statusFilter?"active":""}" data-status="${s}">${l}<b>${tasks.filter(t=>t.status===s&&relevant(t)).length}</b></button>`).join("");
+  document.querySelectorAll("[data-status]").forEach(b=>b.onclick=()=>{statusFilter=b.dataset.status;render()});
+  const list=tasks.filter(t=>t.status===statusFilter&&relevant(t)).sort((a,b)=>(b.updatedAt||"").localeCompare(a.updatedAt||""));
+  if(!list.length){$("#taskList").innerHTML='<div class="empty"><b>Belum ada tugas di bagian ini</b>Tekan “Tambah tugas” untuk membuat pekerjaan pertama.</div>';return}
+  $("#taskList").innerHTML=list.map(t=>`<article class="card ${late(t)?"overdue":""}">
+    <div class="row"><div><div class="tags"><span class="tag ${t.priority==="Mendesak"?"urgent":t.priority==="Tinggi"?"high":""}">${esc(t.priority)}</span><span class="tag">${STATUSES.find(x=>x[0]===t.status)?.[1]||t.status}</span></div><h3>${esc(t.title)}</h3></div></div>
+    ${t.description?`<p class="desc">${esc(t.description)}</p>`:""}<div class="meta"><span>◉ ${esc(t.department)}</span><span>👤 ${esc(t.pic||"PIC belum ditentukan")}</span><span class="${late(t)?"late":""}">▣ ${t.dueDate?esc(t.dueDate):"Tanpa deadline"}</span>${t.targetDept?`<span class="route">→ ${esc(t.targetDept)}</span>`:""}</div>
+    <div class="actions"><button class="btn delete" data-delete="${t.id}">Hapus</button><button class="btn edit" data-edit="${t.id}">Edit</button>${t.status!=="done"?`<button class="btn done" data-advance="${t.id}">${t.status==="new"?"Mulai":"Selesai"}</button>`:""}</div></article>`).join("");
+  document.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>openEdit(b.dataset.edit));
+  document.querySelectorAll("[data-delete]").forEach(b=>b.onclick=async()=>{if(confirm("Hapus tugas ini?")){try{await remove(b.dataset.delete);await load();showToast("Tugas dihapus")}catch{showToast("Gagal menghapus")}}});
+  document.querySelectorAll("[data-advance]").forEach(b=>b.onclick=async()=>{const t=tasks.find(x=>x.id===b.dataset.advance);t.status=t.status==="new"?"in_progress":"done";t.targetDept=null;t.updatedAt=new Date().toISOString();try{await save(t);await load();showToast("Status diperbarui")}catch{showToast("Gagal menyimpan")}});
+}
+function openAdd(){editingId=null;$("#formTitle").textContent="Tugas baru";$("#taskForm").reset();$("#department").value=deptFilter==="Semua Divisi"?DEPTS[0]:deptFilter;$("#status").value="new";$("#priority").value="Normal";toggleTarget();$("#overlay").classList.add("open")}
+function openEdit(id){const t=tasks.find(x=>x.id===id);editingId=id;$("#formTitle").textContent="Edit tugas";["title","description","department","pic","status","priority","dueDate","targetDept"].forEach(k=>$("#"+k).value=t[k]||"");toggleTarget();$("#overlay").classList.add("open")}
+function closeForm(){$("#overlay").classList.remove("open")}function toggleTarget(){$("#targetField").hidden=$("#status").value!=="handoff"}
+$("#department").innerHTML=DEPTS.map(d=>`<option>${d}</option>`).join("");$("#targetDept").innerHTML=DEPTS.map(d=>`<option>${d}</option>`).join("");$("#status").innerHTML=STATUSES.map(([s,l])=>`<option value="${s}">${l}</option>`).join("");
+$("#status").onchange=toggleTarget;$("#addBtn").onclick=openAdd;$("#cancelBtn").onclick=closeForm;$("#overlay").onclick=e=>{if(e.target===$("#overlay"))closeForm()};
+$("#taskForm").onsubmit=async e=>{e.preventDefault();const old=tasks.find(t=>t.id===editingId);const s=$("#status").value;const t={id:editingId||("t"+Date.now()+Math.random().toString(36).slice(2,7)),title:$("#title").value.trim(),description:$("#description").value.trim(),department:$("#department").value,pic:$("#pic").value.trim(),status:s,priority:$("#priority").value,dueDate:$("#dueDate").value||null,targetDept:s==="handoff"?$("#targetDept").value:null,createdAt:old?.createdAt||new Date().toISOString(),updatedAt:new Date().toISOString()};try{await save(t);closeForm();statusFilter=t.status;deptFilter=t.department;await load();showToast("Tersimpan")}catch{showToast("Gagal menyimpan")}};
+load();
+</script>
+</body>
+</html>
